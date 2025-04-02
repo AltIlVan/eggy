@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ucapan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); /* Font pixel */
+
+        body {
+            font-family: 'Press Start 2P', cursive; /* Font bernuansa pixel */
+            background: radial-gradient(circle, #ffc0cb, #ff69b4); /* Gradien pink muda dan tua */
+            background-size: 200% 200%; /* Ukuran besar untuk animasi */
+            animation: smoothSunburst 8s infinite ease-in-out; /* Animasi smooth looping */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden; /* Hindari scroll */
+            image-rendering: pixelated; /* Efek pixelate */
+            transition: background 0.5s ease; /* Transisi untuk perubahan warna */
+        }
+
+        @keyframes smoothSunburst {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .card img {
+            max-width: 300px;
+            max-height: 400px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .card img.clicked {
+            transform: scale(1.2) rotate(10deg);
+            opacity: 0.7;
+            animation: none !important; /* Hentikan animasi idle saat animasi klik aktif */
+        }
+        .text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(45deg, #333, #555); /* Latar belakang retro */
+            padding: 15px 20px;
+            border: 4px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+        .telur1 .text {
+            color: #ffffff;
+        }
+        .telur2 .text {
+            color: #c7fd05;
+        }
+        .telur3 .text {
+            color: #f7f7f7;
+        }
+        @keyframes idleShake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-3px);
+            }
+            50% {
+                transform: translateX(3px);
+            }
+            75% {
+                transform: translateX(-3px);
+            }
+        }
+        #telur2.idle, #telur3.idle {
+            animation: idleShake 0.5s infinite;
+        }
+
+        .gif-container {
+            display: none; /* Sembunyikan awalnya */
+            text-align: center;
+        }
+
+        .gif-container img {
+            max-width: 400px; /* Memperbesar ukuran gambar terakhir */
+            max-height: 500px;
+        }
+
+        .gif-container .gif-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(45deg, #333, #555); /* Latar belakang retro */
+            padding: 15px 20px;
+            border: 4px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .next-sequence {
+            display: none; /* Sembunyikan awalnya */
+            position: absolute;
+            top: 50%;
+            left: -100%; /* Mulai dari luar layar */
+            transform: translate(-50%, -50%);
+            animation: slideIn 2s forwards; /* Animasi masuk ke tengah */
+        }
+
+        @keyframes slideIn {
+            to {
+                left: 33%; /* Pastikan posisi akhir benar-benar di tengah */
+                top: 40%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .standing-sequence {
+            display: none; /* Sembunyikan awalnya */
+            position: fixed;
+            top: 60%; /* Pusatkan secara vertikal */
+            left: 50%; /* Pusatkan secara horizontal */
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10; /* Pastikan berada di atas elemen lain */
+        }
+
+        .standing-sequence .pet-text {
+            margin-top: 20px; /* Jarak di bawah standing sequence */
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(45deg, #333, #555); /* Latar belakang retro */
+            padding: 15px 20px;
+            border: 4px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .standing-sequence .pet-text input {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            padding: 10px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            background: #222;
+            color: #fff;
+            width: 80%; /* Lebar input lebih proporsional */
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .standing-sequence .pet-text button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            padding: 10px 20px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            background: #555;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .standing-sequence .pet-text button:hover {
+            background: #777;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="telur1">
+    <div style="position: fixed; top: 5px; left: 5px; font-size: 10px; color: #fff; opacity: 0.7; z-index: 1000;">
+        @altilvan
+    </div>
+    <div class="card">
+        <img src="telur1.png" alt="Telur 1" id="telur1" class="active">
+        <img src="telur2.png" alt="Telur 2" id="telur2" style="display: none;">
+        <img src="telur3.png" alt="Telur 3" id="telur3" style="display: none;">
+    </div>
+    <div class="text" id="cardText">Telur? dari siapa nih?</div>
+    <div class="gif-container" id="gifContainer">
+        <img src="telurpecah1.gif" alt="Egg Cracking">
+        <div class="gif-text">Eggs is cracking</div>
+    </div>
+    <div class="next-sequence" id="nextSequence">
+        <img src="walk.gif" alt="Walking Character" id="walkingGif">
+    </div>
+    <div class="standing-sequence" id="standingSequence">
+        <img src="wavecrop.gif" alt="Standing Character">
+    </div>
+    <script>
+        const texts = [
+            "A Message for you, click me!",
+            "Retak? duh gimana nih",
+            "Bentar lagi mau menetas tuh"
+        ];
+        const bodyClasses = ["telur1", "telur2", "telur3"];
+        const backgroundColors = [
+            "radial-gradient(circle, #ffc0cb, #ff69b4)", // Pink muda ke pink tua
+            "radial-gradient(circle, #ffb6c1, #ff1493)", // Pink lebih terang ke pink gelap
+            "radial-gradient(circle, #ff99cc, #ff3366)"  // Pink cerah ke pink kemerahan
+        ]; // Warna latar belakang dengan perubahan tone
+        let currentIndex = 0;
+        const cardText = document.getElementById('cardText');
+        const body = document.body;
+        const images = [
+            document.getElementById('telur1'),
+            document.getElementById('telur2'),
+            document.getElementById('telur3')
+        ];
+        const gifContainer = document.getElementById('gifContainer');
+        const nextSequence = document.getElementById('nextSequence');
+        const standingSequence = document.getElementById('standingSequence');
+        let petName = ""; // Variabel untuk menyimpan nama pet
+
+        // Update standing-sequence to include pet-text input and button
+        standingSequence.innerHTML += `
+            <div class="pet-text" id="petText">
+                <p>Hai, namaku...</p>
+                <input type="text" id="petNameInput" placeholder="Masukkan nama pet">
+                <button id="savePetNameButton">Simpan Nama</button>
+            </div>
+        `;
+
+        // Add event listener for saving the pet name
+        document.getElementById('savePetNameButton').addEventListener('click', () => {
+            const petNameInput = document.getElementById('petNameInput');
+            petName = petNameInput.value.trim(); // Simpan nama pet
+            if (petName) {
+                const petText = document.getElementById('petText');
+                petText.innerHTML = `<p>Hai, nama saya ${petName}!</p>`; // Update text
+
+                // Ganti wave.gif dengan idle.gif
+                const standingImage = standingSequence.querySelector('img');
+                standingImage.src = 'idle.gif';
+                standingImage.alt = 'Idle Character';
+
+                // Tambahkan event listener untuk klik pada idle.gif
+                const additionalTexts = [
+                    "Senang bertemu denganmu!",
+                    "Ayo kita mulai petualangan ini!",
+                    "Aku akan selalu ada untukmu!",
+                    "Hari ini cerah sekali, ya?",
+                    "Jangan lupa makan dan istirahat!",
+                    "Aku suka berada di sini bersamamu.",
+                    "Kita akan menghadapi semuanya bersama.",
+                    "Kamu adalah teman terbaikku!",
+                    "Aku harap kamu selalu bahagia.",
+                    "Mari kita buat kenangan indah bersama!"
+                ];
+                let textIndex = 0;
+
+                standingImage.addEventListener('click', () => {
+                    // Update text box setiap kali idle.gif diklik
+                    petText.innerHTML = `<p>${additionalTexts[textIndex]}</p>`;
+                    textIndex = (textIndex + 1) % additionalTexts.length; // Loop teks
+                });
+            } else {
+                alert("Masukkan nama petmu terlebih dahulu!");
+            }
+        });
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                if (index === currentIndex) {
+                    // Tambahkan animasi klik
+                    img.classList.add('clicked');
+                    setTimeout(() => {
+                        img.classList.remove('clicked');
+                        if (currentIndex < images.length - 1) {
+                            images[currentIndex].style.display = 'none';
+                            currentIndex++;
+                            images[currentIndex].style.display = 'block';
+                            images[currentIndex].classList.add('idle'); // Tambahkan animasi idle
+                            cardText.textContent = texts[currentIndex];
+                            body.className = bodyClasses[currentIndex];
+                            body.style.background = backgroundColors[currentIndex]; // Ubah warna latar belakang
+                        } else {
+                            // Tampilkan GIF dan teks setelah klik terakhir
+                            document.querySelector('.card').style.display = 'none';
+                            cardText.style.display = 'none';
+                            gifContainer.style.display = 'block';
+
+                            // Delay sebelum sequence berikutnya
+                            setTimeout(() => {
+                                gifContainer.style.display = 'none';
+                                nextSequence.style.display = 'block';
+
+                                // Delay sebelum menampilkan standing sequence
+                                setTimeout(() => {
+                                    nextSequence.style.display = 'none';
+                                    standingSequence.style.display = 'block'; // Tampilkan standing sequence
+                                }, 3000); // Delay 3 detik
+                            }, 3000); // Delay 3 detik
+                        }
+                    }, 300); // Waktu animasi sesuai dengan CSS transition
+                }
+            });
+        });
+    </script>
+</body>
+</html>
